@@ -27,7 +27,7 @@ module.exports = {
           type : 'string',
           enum : states,
         },
-        association : {
+        owner : {
           model : Association,
           unique: true,
         }

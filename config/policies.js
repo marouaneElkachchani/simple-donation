@@ -26,7 +26,12 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  'NeedController': {
+    'getAllNeeds': ['isLogedIn', 'isAssociation'],
+    'createNeed': ['isLogedIn', 'isAssociation'],
+    'getNeed': ['isLogedIn', 'isAssociation', 'isNeedowner'],
+    'updateNeed': ['isLogedIn', 'isAssociation', 'isNeedowner']
+  }
 
   /***************************************************************************
   *                                                                          *
