@@ -15,6 +15,9 @@ module.exports = {
       }
       res.ok(result)
     })
-  }
+  },
+  approveAssociation (req, res) {
+    
+  },
 
 }
