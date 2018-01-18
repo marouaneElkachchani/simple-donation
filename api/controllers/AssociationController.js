@@ -13,6 +13,14 @@ module.exports = {
    */
   create(req, res) {
 
+    const association = req.body
+    association.state = sails.config.CONSTANTS.STATES.PND
+
+    Association.create(association).exec((err, createdAssociation) => {
+      if (err) return res.negotiate(err)
+      res.ok(createdAssociation)
+    })
+
   },
 
   /**
@@ -21,6 +29,27 @@ module.exports = {
    */
   update(req, res) {
 
+    let associationId = jwt.decode(req.headers.authorization, sails.config.CONSTANTS.JWT_SECRET).sub
+    const association = req.body
+
+    const destroyOldAssociation = () => Promise.resolve(Association.destroy({id : associationId}).exec((err) => {
+      if (err) res.negotiate(err)
+    }))
+
+    const updateAssociation = () => Promise.resolve(Association.update({
+      id: associationId
+    }, association).exec((err, updatedAssociation) => {
+      if (err) return res.negotiate(err)
+      res.ok(' updated succefuly ')
+    })
+    )
+    destroyOldAssociation()
+      .then(() => {
+        return updateAssociation()
+      }).catch(err => {
+        return res.negotiate(err)
+      }
+      )
   },
 
   /**

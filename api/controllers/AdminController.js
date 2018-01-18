@@ -16,8 +16,15 @@ module.exports = {
       res.ok(result)
     })
   },
+
   approveAssociation (req, res) {
-    
+    const id = req.param('associationId')
+    Association.update({
+      id: id
+    }, {state : sails.config.CONSTANTS.STATES.APD}).exec((err, updatedAssociation) => {
+      if (err) return res.negotiate(err)
+      res.ok(' updated succefuly ')
+    })
   },
 
 }

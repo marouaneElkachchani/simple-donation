@@ -25,7 +25,12 @@ module.exports.policies = {
   * access)                                                                  *
   *                                                                          *
   ***************************************************************************/
-
+  'AdminController' : {
+    'approveAssociation': ['isLogedIn']
+  },
+  'AssociationController': {
+    'update': ['isLogedIn', 'isAssociation']
+  },
   'NeedController': {
     'getAllNeeds': ['isLogedIn', 'isAssociation'],
     'createNeed': ['isLogedIn', 'isAssociation'],
