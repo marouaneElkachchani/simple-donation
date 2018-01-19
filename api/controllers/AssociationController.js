@@ -57,14 +57,23 @@ module.exports = {
    *  @param     :: {object} association- association Id
    */
   get(req, res) {
-
+    const id = req.param('associationId')
+    Association.find({
+      id: id
+    }).populate('needs').exec((err, association) => {
+      if (err) return res.negotiate(err)
+      res.ok(association)
+    })
   },
   /**
    * @description :: get all associations
    *  @param     ::
    */
   getAll(req, res) {
-
+    Association.find().populate('needs').exec((err, associations) => {
+      if (err) return res.negotiate(err)
+      res.ok(associations)
+    })
   }
 
 
